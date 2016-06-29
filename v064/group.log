@@ -9,8 +9,8 @@ tester ofp version=openflow13
 Test files directory = ryu/tests/switch/of13/group
 --- Test start ---
 waiting for switches connection...
-dpid=0000000000000001 : Join tester SW.
 dpid=000070b3d56cd016 : Join target SW.
+dpid=0000000000000001 : Join tester SW.
 group: 00_ALL
     2Mbps(ethernet/ipv4/tcp)-->'in_port=1,actions=group:all(actions=output:2/actions=output:3)'          ERROR
         Failed to add groups: group desc stats request timeout.

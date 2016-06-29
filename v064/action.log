@@ -6,11 +6,11 @@ target_dpid=000070b3d56cd016
 tester_dpid=0000000000000001
 target ofp version=openflow13
 tester ofp version=openflow13
-Test files directory = ryu/tests/switch/of13/action/
+Test files directory = ryu/tests/switch/of13/action
 --- Test start ---
 waiting for switches connection...
-dpid=000070b3d56cd016 : Join target SW.
 dpid=0000000000000001 : Join tester SW.
+dpid=000070b3d56cd016 : Join target SW.
 action: 00_OUTPUT
     ethernet/ipv4/tcp-->'actions=output:2'                                                               OK
     ethernet/ipv6/tcp-->'actions=output:2'                                                               OK
@@ -44,12 +44,9 @@ action: 17_PUSH_VLAN
     ethernet/ipv6/tcp-->'eth_type=0x86dd,actions=push_vlan:0x8100,output:2'                              OK
     ethernet/arp-->'eth_type=0x0806,actions=push_vlan:0x8100,output:2'                                   OK
 action: 17_PUSH_VLAN (multiple)
-    ethernet/vlan/ipv4/tcp-->'eth_type=0x0800,actions=push_vlan:0x88a8,output:2'                         ERROR
-        Received incorrect packet: ethernet(ethertype=33024)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
-    ethernet/vlan/ipv6/tcp-->'eth_type=0x86dd,actions=push_vlan:0x88a8,output:2'                         ERROR
-        Received incorrect packet: ethernet(ethertype=33024)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
-    ethernet/vlan/arp-->'eth_type=0x0806,actions=push_vlan:0x88a8,output:2'                              ERROR
-        Received incorrect packet: ethernet(ethertype=33024)/str('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+    ethernet/vlan/ipv4/tcp-->'eth_type=0x0800,actions=push_vlan:0x88a8,output:2'                         OK
+    ethernet/vlan/ipv6/tcp-->'eth_type=0x86dd,actions=push_vlan:0x88a8,output:2'                         OK
+    ethernet/vlan/arp-->'eth_type=0x0806,actions=push_vlan:0x88a8,output:2'                              OK
 action: 18_POP_VLAN
     ethernet/vlan(vid=100)/ipv4/tcp-->'eth_type=0x0800,vlan_vid=0,actions=pop_vlan,output:2'             OK
     ethernet/vlan(vid=100)/ipv6/tcp-->'eth_type=0x86dd,vlan_vid=0,actions=pop_vlan,output:2'             OK
@@ -145,19 +142,16 @@ action: set_field: 05_ETH_TYPE
     ethernet(ethertype=0x86dd)/ipv6/tcp-->'eth_type=0x86dd,actions=set_field:0x8848->eth_type,output:2'  OK
     ethernet(ethertype=0x0806)/arp-->'eth_type=0x0806,actions=set_field:0x8848->eth_type,output:2'       OK
 action: set_field: 06_VLAN_VID
-    ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'            ERROR
-        Receiving timeout: no change in tx_packets on target.
-    ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'            ERROR
-        Receiving timeout: no change in tx_packets on target.
-    ethernet/vlan(vid=100)/arp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'                 ERROR
-        Receiving timeout: no change in tx_packets on target.
+    ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'            OK
+    ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'            OK
+    ethernet/vlan(vid=100)/arp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'                 OK
 action: set_field: 07_VLAN_PCP
     ethernet/vlan(pcp=3)/ipv4/tcp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'                  ERROR
-        Receiving timeout: no change in tx_packets on target.
+        Received incorrect packet: vlan(pcp=3)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
     ethernet/vlan(pcp=3)/ipv6/tcp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'                  ERROR
-        Receiving timeout: no change in tx_packets on target.
+        Received incorrect packet: vlan(pcp=3)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
     ethernet/vlan(pcp=3)/arp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'                       ERROR
-        Receiving timeout: no change in tx_packets on target.
+        Received incorrect packet: vlan(pcp=3)/str('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
 action: set_field: 08_IP_DSCP (IPv4)
     ethernet/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=set_field:16->ip_dscp,output:2'                       ERROR
         Received incorrect packet: ipv4(tos=32,csum=56094)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
@@ -196,9 +190,9 @@ action: set_field: 09_IP_ECN (IPv6)
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 10_IP_PROTO (IPv4)
     ethernet/ipv4(proto=6)/tcp-->'ip_proto=6,actions=set_field:17->ip_proto,output:2'                    ERROR
-        Received incorrect packet: ipv4(csum=30)
+        Received incorrect packet: udp(csum=65524)
     ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=6,actions=set_field:17->ip_proto,output:2'               ERROR
-        Received incorrect packet: ipv4(csum=30)
+        Received incorrect packet: udp(csum=65524)
     ethernet/mpls/ipv4(proto=6)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_proto=6,actions=set_field:17->ip_proto,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4(proto=6)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ip_proto=6,actions=set_field:17->ip_proto,output:2' ERROR
@@ -213,28 +207,22 @@ action: set_field: 10_IP_PROTO (IPv6)
     ethernet/itag/ethernet/ipv6(nxt=6)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ip_proto=6,actions=set_field:17->ip_proto,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 11_IPV4_SRC
-    ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2' ERROR
-        Received incorrect packet: ipv4(csum=56094)/tcp(csum=52044)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
-    ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2' ERROR
-        Received incorrect packet: ipv4(csum=56094)/tcp(csum=52044)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
+    ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2' OK
+    ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2' OK
     ethernet/mpls/ipv4(src='192.168.10.10')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4(src='192.168.10.10')/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 12_IPV4_DST
-    ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2' ERROR
-        Received incorrect packet: ipv4(csum=56094)/tcp(csum=52044)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
-    ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2' ERROR
-        Received incorrect packet: ipv4(csum=56094)/tcp(csum=52044)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
+    ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2' OK
+    ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2' OK
     ethernet/mpls/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 13_TCP_SRC (IPv4)
-    ethernet/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'        ERROR
-        Receiving timeout: no change in tx_packets on target.
-    ethernet/vlan/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'   ERROR
-        Receiving timeout: no change in tx_packets on target.
+    ethernet/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'        OK
+    ethernet/vlan/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'   OK
     ethernet/mpls/ipv4/tcp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4/tcp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2' ERROR
@@ -249,10 +237,8 @@ action: set_field: 13_TCP_SRC (IPv6)
     ethernet/itag/ethernet/ipv6/tcp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 14_TCP_DST (IPv4)
-    ethernet/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'           ERROR
-        Receiving timeout: no change in tx_packets on target.
-    ethernet/vlan/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'      ERROR
-        Receiving timeout: no change in tx_packets on target.
+    ethernet/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'           OK
+    ethernet/vlan/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'      OK
     ethernet/mpls/ipv4/tcp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4/tcp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2' ERROR
@@ -267,10 +253,8 @@ action: set_field: 14_TCP_DST (IPv6)
     ethernet/itag/ethernet/ipv6/tcp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 15_UDP_SRC (IPv4)
-    ethernet/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'        ERROR
-        Receiving timeout: no change in tx_packets on target.
-    ethernet/vlan/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'   ERROR
-        Receiving timeout: no change in tx_packets on target.
+    ethernet/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'        OK
+    ethernet/vlan/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'   OK
     ethernet/mpls/ipv4/udp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_src=11111,actions=set_field:12345->udp_src,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4/udp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,udp_src=11111,actions=set_field:12345->udp_src,output:2' ERROR
@@ -286,9 +270,9 @@ action: set_field: 15_UDP_SRC (IPv6)
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 16_UDP_DST (IPv4)
     ethernet/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'           ERROR
-        Received incorrect packet: udp(csum=11051)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
+        Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'      ERROR
-        Received incorrect packet: udp(csum=11051)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
+        Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/udp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_dst=2222,actions=set_field:6789->udp_dst,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4/udp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,udp_dst=2222,actions=set_field:6789->udp_dst,output:2' ERROR
@@ -486,11 +470,11 @@ action: set_field: 36_MPLS_BOS
         Received incorrect packet: mpls(bsb=1,exp=3,label=100,ttl=64)/udp(csum=1,dst_port=2048,src_port=1,total_length=1540)/str('\x12\x11\x11\x11\x11\x11\xc0\xa8\n\n""""""\xc0\xa8\x14\x14\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
 action: set_field: 37_PBB_ISID
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2' ERROR
-        Receiving timeout: no change in tx_packets on target.
+        Received incorrect packet: itag(sid=100)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2' ERROR
-        Receiving timeout: no change in tx_packets on target.
+        Received incorrect packet: itag(sid=100)/str('\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f')
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2' ERROR
-        Receiving timeout: no change in tx_packets on target.
+        Received incorrect packet: itag(sid=100)/str('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
 action: set_field: 38_TUNNEL_ID
     ethernet/ipv4/tcp-->'actions=set_field:12345->tunnel_id,goto_table:1','table_id:1,tunnel_id=12345,actions=output:2' OK
     ethernet/ipv6/tcp-->'actions=set_field:12345->tunnel_id,goto_table:1','table_id:1,tunnel_id=12345,actions=output:2' OK
@@ -498,7 +482,7 @@ action: set_field: 38_TUNNEL_ID
 ---  Test end  ---
 
 --- Test report ---
-Received incorrect packet(78)
+Received incorrect packet(75)
     action: 11_COPY_TTL_OUT                  ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_out,output:2'
     action: 11_COPY_TTL_OUT                  ethernet/mpls(ttl=64)/ipv6(hop_limit=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_out,output:2'
     action: 12_COPY_TTL_IN                   ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_in,output:2'
@@ -509,9 +493,6 @@ Received incorrect packet(78)
     action: 16_DEC_MPLS_TTL                  ethernet/mpls(ttl=64)/ipv4/tcp-->'eth_type=0x8847,actions=dec_mpls_ttl,output:2'
     action: 16_DEC_MPLS_TTL                  ethernet/mpls(ttl=64)/ipv6/tcp-->'eth_type=0x8847,actions=dec_mpls_ttl,output:2'
     action: 16_DEC_MPLS_TTL                  ethernet/mpls(ttl=64)/arp-->'eth_type=0x8847,actions=dec_mpls_ttl,output:2'
-    action: 17_PUSH_VLAN (multiple)          ethernet/vlan/ipv4/tcp-->'eth_type=0x0800,actions=push_vlan:0x88a8,output:2'
-    action: 17_PUSH_VLAN (multiple)          ethernet/vlan/ipv6/tcp-->'eth_type=0x86dd,actions=push_vlan:0x88a8,output:2'
-    action: 17_PUSH_VLAN (multiple)          ethernet/vlan/arp-->'eth_type=0x0806,actions=push_vlan:0x88a8,output:2'
     action: 19_PUSH_MPLS                     ethernet/ipv4/tcp-->'eth_type=0x0800,actions=push_mpls:0x8847,output:2'
     action: 19_PUSH_MPLS                     ethernet/ipv6/tcp-->'eth_type=0x86dd,actions=push_mpls:0x8847,output:2'
     action: 19_PUSH_MPLS                     ethernet/arp-->'eth_type=0x0806,actions=push_mpls:0x8847,output:2'
@@ -538,6 +519,9 @@ Received incorrect packet(78)
     action: 27_POP_PBB                       ethernet/itag/ethernet/svlan/vlan/ipv4/tcp-->'eth_type=0x88e7,actions=pop_pbb,output:2'
     action: 27_POP_PBB                       ethernet/itag/ethernet/svlan/vlan/ipv6/tcp-->'eth_type=0x88e7,actions=pop_pbb,output:2'
     action: 27_POP_PBB                       ethernet/itag/ethernet/svlan/vlan/arp-->'eth_type=0x88e7,actions=pop_pbb,output:2'
+    action: set_field: 07_VLAN_PCP           ethernet/vlan(pcp=3)/ipv4/tcp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'
+    action: set_field: 07_VLAN_PCP           ethernet/vlan(pcp=3)/ipv6/tcp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'
+    action: set_field: 07_VLAN_PCP           ethernet/vlan(pcp=3)/arp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'
     action: set_field: 08_IP_DSCP (IPv4)     ethernet/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=set_field:16->ip_dscp,output:2'
     action: set_field: 08_IP_DSCP (IPv4)     ethernet/vlan/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=set_field:16->ip_dscp,output:2'
     action: set_field: 08_IP_DSCP (IPv6)     ethernet/ipv6(traffic_class=32)/tcp-->'ip_dscp=8,actions=set_field:16->ip_dscp,output:2'
@@ -548,12 +532,6 @@ Received incorrect packet(78)
     action: set_field: 09_IP_ECN (IPv6)      ethernet/vlan/ipv6(traffic_class=32)/tcp-->'ip_ecn=0,actions=set_field:1->ip_ecn,output:2'
     action: set_field: 10_IP_PROTO (IPv4)    ethernet/ipv4(proto=6)/tcp-->'ip_proto=6,actions=set_field:17->ip_proto,output:2'
     action: set_field: 10_IP_PROTO (IPv4)    ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=6,actions=set_field:17->ip_proto,output:2'
-    action: set_field: 11_IPV4_SRC           ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2'
-    action: set_field: 11_IPV4_SRC           ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2'
-    action: set_field: 12_IPV4_DST           ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2'
-    action: set_field: 12_IPV4_DST           ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2'
-    action: set_field: 16_UDP_DST (IPv4)     ethernet/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
-    action: set_field: 16_UDP_DST (IPv4)     ethernet/vlan/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
     action: set_field: 17_SCTP_SRC (IPv4)    ethernet/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=set_field:12345->sctp_src,output:2'
     action: set_field: 17_SCTP_SRC (IPv4)    ethernet/vlan/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=set_field:12345->sctp_src,output:2'
     action: set_field: 18_SCTP_DST (IPv4)    ethernet/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=set_field:6789->sctp_dst,output:2'
@@ -577,7 +555,10 @@ Received incorrect packet(78)
     action: set_field: 36_MPLS_BOS           ethernet/mpls(bsb=1)/ipv4/tcp-->'mpls_bos=1,actions=set_field:0->mpls_bos,output:2'
     action: set_field: 36_MPLS_BOS           ethernet/mpls(bsb=1)/ipv6/tcp-->'mpls_bos=1,actions=set_field:0->mpls_bos,output:2'
     action: set_field: 36_MPLS_BOS           ethernet/mpls(bsb=1)/arp-->'mpls_bos=1,actions=set_field:0->mpls_bos,output:2'
-Receiving timeout(117)
+    action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
+    action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
+    action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
+Receiving timeout(104)
     action: 23_SET_NW_TTL (IPv4)             ethernet/mpls/ipv4(ttl=64)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,eth_type=0x0800,actions=set_nw_ttl:32,output:2'
     action: 23_SET_NW_TTL (IPv4)             ethernet/itag/ethernet/ipv4(ttl=64)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,eth_type=0x0800,actions=set_nw_ttl:32,output:2'
     action: 23_SET_NW_TTL (IPv6)             ethernet/mpls/ipv6(hop_limit=64)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,eth_type=0x86dd,actions=set_nw_ttl:32,output:2'
@@ -586,12 +567,6 @@ Receiving timeout(117)
     action: 24_DEC_NW_TTL (IPv4)             ethernet/itag/ethernet/ipv4(ttl=64)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,eth_type=0x0800,actions=dec_nw_ttl,output:2'
     action: 24_DEC_NW_TTL (IPv6)             ethernet/mpls/ipv6(hop_limit=64)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,eth_type=0x86dd,actions=dec_nw_ttl,output:2'
     action: 24_DEC_NW_TTL (IPv6)             ethernet/itag/ethernet/ipv6(hop_limit=64)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,eth_type=0x86dd,actions=dec_nw_ttl,output:2'
-    action: set_field: 06_VLAN_VID           ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'
-    action: set_field: 06_VLAN_VID           ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'
-    action: set_field: 06_VLAN_VID           ethernet/vlan(vid=100)/arp-->'vlan_vid=100,actions=set_field:203->vlan_vid,output:2'
-    action: set_field: 07_VLAN_PCP           ethernet/vlan(pcp=3)/ipv4/tcp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'
-    action: set_field: 07_VLAN_PCP           ethernet/vlan(pcp=3)/ipv6/tcp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'
-    action: set_field: 07_VLAN_PCP           ethernet/vlan(pcp=3)/arp-->'vlan_pcp=3,actions=set_field:5->vlan_pcp,output:2'
     action: set_field: 08_IP_DSCP (IPv4)     ethernet/mpls/ipv4(tos=32)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_dscp=8,actions=set_field:16->ip_dscp,output:2'
     action: set_field: 08_IP_DSCP (IPv4)     ethernet/itag/ethernet/ipv4(tos=32)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ip_dscp=8,actions=set_field:16->ip_dscp,output:2'
     action: set_field: 08_IP_DSCP (IPv6)     ethernet/mpls/ipv6(traffic_class=32)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_dscp=8,actions=set_field:16->ip_dscp,output:2'
@@ -610,30 +585,26 @@ Receiving timeout(117)
     action: set_field: 11_IPV4_SRC           ethernet/itag/ethernet/ipv4(src='192.168.10.10')/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ipv4_src=192.168.10.10,actions=set_field:10.10.10.10->ipv4_src,output:2'
     action: set_field: 12_IPV4_DST           ethernet/mpls/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2'
     action: set_field: 12_IPV4_DST           ethernet/itag/ethernet/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ipv4_dst=192.168.20.20,actions=set_field:10.10.20.20->ipv4_dst,output:2'
-    action: set_field: 13_TCP_SRC (IPv4)     ethernet/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
-    action: set_field: 13_TCP_SRC (IPv4)     ethernet/vlan/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
     action: set_field: 13_TCP_SRC (IPv4)     ethernet/mpls/ipv4/tcp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
     action: set_field: 13_TCP_SRC (IPv4)     ethernet/itag/ethernet/ipv4/tcp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
     action: set_field: 13_TCP_SRC (IPv6)     ethernet/ipv6/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
     action: set_field: 13_TCP_SRC (IPv6)     ethernet/vlan/ipv6/tcp(src_port=11111)-->'tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
     action: set_field: 13_TCP_SRC (IPv6)     ethernet/mpls/ipv6/tcp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
     action: set_field: 13_TCP_SRC (IPv6)     ethernet/itag/ethernet/ipv6/tcp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_src=11111,actions=set_field:12345->tcp_src,output:2'
-    action: set_field: 14_TCP_DST (IPv4)     ethernet/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
-    action: set_field: 14_TCP_DST (IPv4)     ethernet/vlan/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
     action: set_field: 14_TCP_DST (IPv4)     ethernet/mpls/ipv4/tcp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
     action: set_field: 14_TCP_DST (IPv4)     ethernet/itag/ethernet/ipv4/tcp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
     action: set_field: 14_TCP_DST (IPv6)     ethernet/ipv6/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
     action: set_field: 14_TCP_DST (IPv6)     ethernet/vlan/ipv6/tcp(dst_port=2222)-->'tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
     action: set_field: 14_TCP_DST (IPv6)     ethernet/mpls/ipv6/tcp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
     action: set_field: 14_TCP_DST (IPv6)     ethernet/itag/ethernet/ipv6/tcp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,tcp_dst=2222,actions=set_field:6789->tcp_dst,output:2'
-    action: set_field: 15_UDP_SRC (IPv4)     ethernet/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'
-    action: set_field: 15_UDP_SRC (IPv4)     ethernet/vlan/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'
     action: set_field: 15_UDP_SRC (IPv4)     ethernet/mpls/ipv4/udp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_src=11111,actions=set_field:12345->udp_src,output:2'
     action: set_field: 15_UDP_SRC (IPv4)     ethernet/itag/ethernet/ipv4/udp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,udp_src=11111,actions=set_field:12345->udp_src,output:2'
     action: set_field: 15_UDP_SRC (IPv6)     ethernet/ipv6/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'
     action: set_field: 15_UDP_SRC (IPv6)     ethernet/vlan/ipv6/udp(src_port=11111)-->'udp_src=11111,actions=set_field:12345->udp_src,output:2'
     action: set_field: 15_UDP_SRC (IPv6)     ethernet/mpls/ipv6/udp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,udp_src=11111,actions=set_field:12345->udp_src,output:2'
     action: set_field: 15_UDP_SRC (IPv6)     ethernet/itag/ethernet/ipv6/udp(src_port=11111)-->'actions=pop_pbb,goto_table:1','table_id:1,udp_src=11111,actions=set_field:12345->udp_src,output:2'
+    action: set_field: 16_UDP_DST (IPv4)     ethernet/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
+    action: set_field: 16_UDP_DST (IPv4)     ethernet/vlan/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
     action: set_field: 16_UDP_DST (IPv4)     ethernet/mpls/ipv4/udp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
     action: set_field: 16_UDP_DST (IPv4)     ethernet/itag/ethernet/ipv4/udp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
     action: set_field: 16_UDP_DST (IPv6)     ethernet/ipv6/udp(dst_port=2222)-->'udp_dst=2222,actions=set_field:6789->udp_dst,output:2'
@@ -692,8 +663,5 @@ Receiving timeout(117)
     action: set_field: 33_IPV6_ND_TLL        ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=set_field:aa:aa:aa:aa:aa:aa->ipv6_nd_tll,output:2'
     action: set_field: 33_IPV6_ND_TLL        ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_tll=22:22:22:22:22:22,actions=set_field:aa:aa:aa:aa:aa:aa->ipv6_nd_tll,output:2'
     action: set_field: 33_IPV6_ND_TLL        ethernet/itag/ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'actions=pop_pbb,goto_table:1','table_id:1,ipv6_nd_tll=22:22:22:22:22:22,actions=set_field:aa:aa:aa:aa:aa:aa->ipv6_nd_tll,output:2'
-    action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
-    action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
-    action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
 
-OK(31) / ERROR(195)
+OK(47) / ERROR(179)

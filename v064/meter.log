@@ -9,8 +9,8 @@ tester ofp version=openflow13
 Test files directory = ryu/tests/switch/of13/meter
 --- Test start ---
 waiting for switches connection...
-dpid=0000000000000001 : Join tester SW.
 dpid=000070b3d56cd016 : Join target SW.
+dpid=0000000000000001 : Join tester SW.
 meter: 01_DROP_00_KBPS_00_1M
     2Mbps(ethernet/ipv4/tcp)-->'in_port=1,actions=meter:1Mbps(drop),output:2'                            ERROR
         Failed to add meters: meter config stats request timeout.
