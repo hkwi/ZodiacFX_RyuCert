@@ -9,8 +9,8 @@ tester ofp version=openflow13
 Test files directory = ryu/tests/switch/of13/action
 --- Test start ---
 waiting for switches connection...
-dpid=0000000000000001 : Join tester SW.
 dpid=000070b3d56cd016 : Join target SW.
+dpid=0000000000000001 : Join tester SW.
 action: 00_OUTPUT
     ethernet/ipv4/tcp-->'actions=output:2'                                                               OK
     ethernet/ipv6/tcp-->'actions=output:2'                                                               OK
