@@ -10,20 +10,7 @@ Test files directory = ryu/tests/switch/of13/
 --- Test start ---
 waiting for switches connection...
 dpid=0000000000000001 : Join tester SW.
---- Test terminated ---
-loading app ryu/tests/switch/tester.py
-loading app ryu.controller.ofp_handler
-instantiating app ryu.controller.ofp_handler of OFPHandler
-instantiating app ryu/tests/switch/tester.py of OfTester
-target_dpid=000070b3d56cd016
-tester_dpid=0000000000000001
-target ofp version=openflow13
-tester ofp version=openflow13
-Test files directory = ryu/tests/switch/of13/
---- Test start ---
-waiting for switches connection...
 dpid=000070b3d56cd016 : Join target SW.
-dpid=0000000000000001 : Join tester SW.
 action: 00_OUTPUT
     ethernet/ipv4/tcp-->'actions=output:2'                                                               OK
     ethernet/ipv6/tcp-->'actions=output:2'                                                               OK
