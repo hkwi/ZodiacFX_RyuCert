@@ -1,0 +1,24 @@
+loading app ryu/tests/switch/tester.py
+loading app ryu.controller.ofp_handler
+instantiating app ryu.controller.ofp_handler of OFPHandler
+instantiating app ryu/tests/switch/tester.py of OfTester
+target_dpid=000070b3d56cd016
+tester_dpid=0000000000000001
+target ofp version=openflow13
+tester ofp version=openflow13
+Test files directory = /home/kawai/ryutest_adhoc/of13/
+--- Test start ---
+waiting for switches connection...
+dpid=000070b3d56cd016 : Join target SW.
+dpid=0000000000000001 : Join tester SW.
+action: 00_qinq
+    ethernet/ipv4/tcp-->'eth_type=0x0800,actions=push_vlan:0x8100,set_field:100->vlan_vid,push_vlan:0x88a8,output:2' OK
+action: 01_qinq_pop
+    vlan/vlan/ethernet/ipv4/tcp-->'eth_type=0x0800,actions=pop_vlan,output:2'                            OK
+action: 27_pushVlan_setVid
+    ethernet/ipv4/tcp-->'eth_type=0x0800,actions=push_vlan:0x8100,set_field:100->vlan_vid,output:2'      OK
+---  Test end  ---
+
+--- Test report ---
+
+OK(3) / ERROR(0)
