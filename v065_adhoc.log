@@ -6,7 +6,7 @@ target_dpid=000070b3d56cd016
 tester_dpid=0000000000000001
 target ofp version=openflow13
 tester ofp version=openflow13
-Test files directory = /home/kawai/ryutest_adhoc/of13/
+Test files directory = /home/kawai/ryutest_adhoc/of13
 --- Test start ---
 waiting for switches connection...
 dpid=000070b3d56cd016 : Join target SW.
