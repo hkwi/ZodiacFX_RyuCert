@@ -323,19 +323,15 @@ action: set_field: 18_SCTP_DST (IPv6)
     ethernet/itag/ethernet/ipv6/sctp(dst_port=2222)-->'actions=pop_pbb,goto_table:1','table_id:1,sctp_dst=2222,actions=set_field:6789->sctp_dst,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 19_ICMPV4_TYPE
-    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2'               ERROR
-        Received incorrect packet: icmp(csum=23002)
-    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2'          ERROR
-        Received incorrect packet: icmp(csum=23002)
+    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2'               OK
+    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2'          OK
     ethernet/mpls/ipv4/icmp(type=8)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4/icmp(type=8)-->'actions=pop_pbb,goto_table:1','table_id:1,icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
 action: set_field: 20_ICMPV4_CODE
-    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2'              ERROR
-        Received incorrect packet: icmp(csum=23002)
-    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2'         ERROR
-        Received incorrect packet: icmp(csum=23002)
+    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2'              OK
+    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2'         OK
     ethernet/mpls/ipv4/icmp(code=0)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/itag/ethernet/ipv4/icmp(code=0)-->'actions=pop_pbb,goto_table:1','table_id:1,icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2' ERROR
@@ -1051,16 +1047,12 @@ match: 18_SCTP_DST (IPv6)
         Receiving timeout: no packet-in.
     ethernet/itag/ethernet/ipv6/sctp(dst_port=6789)-->'actions=pop_pbb,goto_table:1','table_id:1,sctp_dst=2222,actions=output:2' OK
 match: 19_ICMPV4_TYPE
-    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                        ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
-    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                               ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                        OK
+    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                               OK
     ethernet/ipv4/icmp(type=3)-->'icmpv4_type=8,actions=output:2'                                        ERROR
         Table-miss error: increment in matched_count.
-    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                   ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
-    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                          ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                   OK
+    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                          OK
     ethernet/vlan/ipv4/icmp(type=3)-->'icmpv4_type=8,actions=output:2'                                   ERROR
         Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/icmp(type=8)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_type=8,actions=output:2' ERROR
@@ -1074,16 +1066,12 @@ match: 19_ICMPV4_TYPE
         Receiving timeout: no packet-in.
     ethernet/itag/ethernet/ipv4/icmp(type=3)-->'actions=pop_pbb,goto_table:1','table_id:1,icmpv4_type=8,actions=output:2' OK
 match: 20_ICMPV4_CODE
-    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                        ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
-    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                               ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                        OK
+    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                               OK
     ethernet/ipv4/icmp(code=1)-->'icmpv4_code=0,actions=output:2'                                        ERROR
         Table-miss error: increment in matched_count.
-    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                   ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
-    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                          ERROR
-        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                   OK
+    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                          OK
     ethernet/vlan/ipv4/icmp(code=1)-->'icmpv4_code=0,actions=output:2'                                   ERROR
         Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/icmp(code=0)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_code=0,actions=output:2' ERROR
@@ -1755,7 +1743,7 @@ Failed to add meters(36)
     meter: 02_DSCP_REMARK_01_PKTPS_02_10000  20000pktps(ethernet/ipv4(dscp=18)/tcp)-->'in_port=1,actions=meter:10000pktps(dscp_remark:ip_dscp=20),output:2'
     meter: 02_DSCP_REMARK_01_PKTPS_02_10000  20000pktps(ethernet/ipv6(dscp=18)/tcp)-->'in_port=1,actions=meter:10000pktps(dscp_remark:ip_dscp=20),output:2'
     meter: 02_DSCP_REMARK_01_PKTPS_02_10000  20000pktps(ethernet/arp)-->'in_port=1,actions=meter:20000pktps(dscp_remark:prec_level=1),output:2'
-Received incorrect packet(83)
+Received incorrect packet(71)
     action: 11_COPY_TTL_OUT                  ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_out,output:2'
     action: 11_COPY_TTL_OUT                  ethernet/mpls(ttl=64)/ipv6(hop_limit=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_out,output:2'
     action: 12_COPY_TTL_IN                   ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_in,output:2'
@@ -1809,10 +1797,6 @@ Received incorrect packet(83)
     action: set_field: 17_SCTP_SRC (IPv4)    ethernet/vlan/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=set_field:12345->sctp_src,output:2'
     action: set_field: 18_SCTP_DST (IPv4)    ethernet/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=set_field:6789->sctp_dst,output:2'
     action: set_field: 18_SCTP_DST (IPv4)    ethernet/vlan/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=set_field:6789->sctp_dst,output:2'
-    action: set_field: 19_ICMPV4_TYPE        ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2'
-    action: set_field: 19_ICMPV4_TYPE        ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=set_field:0->icmpv4_type,output:2'
-    action: set_field: 20_ICMPV4_CODE        ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2'
-    action: set_field: 20_ICMPV4_CODE        ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=set_field:10->icmpv4_code,output:2'
     action: set_field: 26_IPV6_SRC           ethernet/ipv6(src='10::10')/tcp-->'ipv6_src=10::10,actions=set_field:a0::a0->ipv6_src,output:2'
     action: set_field: 26_IPV6_SRC           ethernet/vlan/ipv6(src='10::10')/tcp-->'ipv6_src=10::10,actions=set_field:a0::a0->ipv6_src,output:2'
     action: set_field: 27_IPV6_DST           ethernet/ipv6(dst='20::20')/tcp-->'ipv6_dst=20::20,actions=set_field:b0::b0->ipv6_dst,output:2'
@@ -1831,14 +1815,6 @@ Received incorrect packet(83)
     action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
     action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
     action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
-    match: 19_ICMPV4_TYPE                    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'
-    match: 19_ICMPV4_TYPE                    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'
-    match: 19_ICMPV4_TYPE                    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'
-    match: 19_ICMPV4_TYPE                    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'
-    match: 20_ICMPV4_CODE                    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'
-    match: 20_ICMPV4_CODE                    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'
-    match: 20_ICMPV4_CODE                    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'
-    match: 20_ICMPV4_CODE                    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'
 Receiving timeout(340)
     action: 23_SET_NW_TTL (IPv4)             ethernet/mpls/ipv4(ttl=64)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,eth_type=0x0800,actions=set_nw_ttl:32,output:2'
     action: 23_SET_NW_TTL (IPv4)             ethernet/itag/ethernet/ipv4(ttl=64)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,eth_type=0x0800,actions=set_nw_ttl:32,output:2'
@@ -2261,4 +2237,4 @@ Table-miss error(79)
     match: 39_IPV6_EXTHDR (Mask)             ethernet/ipv6/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'
     match: 39_IPV6_EXTHDR (Mask)             ethernet/vlan/ipv6/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'
 
-OK(438) / ERROR(553)
+OK(450) / ERROR(541)
