@@ -9,8 +9,8 @@ tester ofp version=openflow13
 Test files directory = ryu/tests/switch/of13/
 --- Test start ---
 waiting for switches connection...
-dpid=0000000000000001 : Join tester SW.
 dpid=000070b3d56cd016 : Join target SW.
+dpid=0000000000000001 : Join tester SW.
 action: 00_OUTPUT
     ethernet/ipv4/tcp-->'actions=output:2'                                                               OK
     ethernet/ipv6/tcp-->'actions=output:2'                                                               OK
@@ -517,16 +517,13 @@ group: 01_SELECT_Weight_IP
 match: 00_IN_PORT
     ethernet/ipv4/tcp-->'in_port=1,actions=output:2'                                                     OK
     ethernet/ipv4/tcp-->'in_port=1,actions=output:CONTROLLER'                                            OK
-    ethernet/ipv4/tcp-->'in_port=2,actions=output:2'                                                     ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4/tcp-->'in_port=2,actions=output:2'                                                     OK
     ethernet/ipv6/tcp-->'in_port=1,actions=output:2'                                                     OK
     ethernet/ipv6/tcp-->'in_port=1,actions=output:CONTROLLER'                                            OK
-    ethernet/ipv6/tcp-->'in_port=2,actions=output:2'                                                     ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/tcp-->'in_port=2,actions=output:2'                                                     OK
     ethernet/arp-->'in_port=1,actions=output:2'                                                          OK
     ethernet/arp-->'in_port=1,actions=output:CONTROLLER'                                                 OK
-    ethernet/arp-->'in_port=2,actions=output:2'                                                          ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/arp-->'in_port=2,actions=output:2'                                                          OK
 match: 02_METADATA
     ethernet/ipv4/tcp-->'actions=write_metadata:255/0xffffffff,goto_table:1','table_id:1,metadata=255,actions=output:2' OK
     ethernet/ipv4/tcp-->'actions=write_metadata:255/0xffffffff,goto_table:1','table_id:1,metadata=255,actions=output:CONTROLLER' OK
@@ -556,116 +553,92 @@ match: 02_METADATA (Mask)
 match: 03_ETH_DST
     ethernet(dst='22:22:22:22:22:22')/ipv4/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'            OK
     ethernet(dst='22:22:22:22:22:22')/ipv4/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:CONTROLLER'   OK
-    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv4/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv4/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'            OK
     ethernet(dst='22:22:22:22:22:22')/ipv6/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'            OK
     ethernet(dst='22:22:22:22:22:22')/ipv6/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:CONTROLLER'   OK
-    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv6/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv6/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'            OK
     ethernet(dst='22:22:22:22:22:22')/arp-->'eth_dst=22:22:22:22:22:22,actions=output:2'                 OK
     ethernet(dst='22:22:22:22:22:22')/arp-->'eth_dst=22:22:22:22:22:22,actions=output:CONTROLLER'        OK
-    ethernet(dst='ba:bb:bb:bb:bb:bb')/arp-->'eth_dst=22:22:22:22:22:22,actions=output:2'                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(dst='ba:bb:bb:bb:bb:bb')/arp-->'eth_dst=22:22:22:22:22:22,actions=output:2'                 OK
 match: 03_ETH_DST (Mask)
     ethernet(dst='22:22:22:22:22:22')/ipv4/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' OK
     ethernet(dst='22:22:22:22:22:22')/ipv4/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:CONTROLLER' OK
-    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv4/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv4/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' OK
     ethernet(dst='22:22:22:22:22:22')/ipv6/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' OK
     ethernet(dst='22:22:22:22:22:22')/ipv6/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:CONTROLLER' OK
-    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv6/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv6/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' OK
     ethernet(dst='22:22:22:22:22:22')/arp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' OK
     ethernet(dst='22:22:22:22:22:22')/arp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:CONTROLLER' OK
-    ethernet(dst='ba:bb:bb:bb:bb:bb')/arp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(dst='ba:bb:bb:bb:bb:bb')/arp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2' OK
 match: 04_ETH_SRC
     ethernet(src='12:11:11:11:11:11')/ipv4/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'            OK
     ethernet(src='12:11:11:11:11:11')/ipv4/tcp-->'eth_src=12:11:11:11:11:11,actions=output:CONTROLLER'   OK
-    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv4/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv4/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'            OK
     ethernet(src='12:11:11:11:11:11')/ipv6/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'            OK
     ethernet(src='12:11:11:11:11:11')/ipv6/tcp-->'eth_src=12:11:11:11:11:11,actions=output:CONTROLLER'   OK
-    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv6/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv6/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'            OK
     ethernet(src='12:11:11:11:11:11')/arp-->'eth_src=12:11:11:11:11:11,actions=output:2'                 OK
     ethernet(src='12:11:11:11:11:11')/arp-->'eth_src=12:11:11:11:11:11,actions=output:CONTROLLER'        OK
-    ethernet(src='aa:aa:aa:aa:aa:aa')/arp-->'eth_src=12:11:11:11:11:11,actions=output:2'                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(src='aa:aa:aa:aa:aa:aa')/arp-->'eth_src=12:11:11:11:11:11,actions=output:2'                 OK
 match: 04_ETH_SRC (Mask)
     ethernet(src='12:11:11:11:11:11')/ipv4/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' OK
     ethernet(src='12:11:11:11:11:11')/ipv4/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:CONTROLLER' OK
-    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv4/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv4/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' OK
     ethernet(src='12:11:11:11:11:11')/ipv6/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' OK
     ethernet(src='12:11:11:11:11:11')/ipv6/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:CONTROLLER' OK
-    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv6/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(src='aa:aa:aa:aa:aa:aa')/ipv6/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' OK
     ethernet(src='12:11:11:11:11:11')/arp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' OK
     ethernet(src='12:11:11:11:11:11')/arp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:CONTROLLER' OK
-    ethernet(src='aa:aa:aa:aa:aa:aa')/arp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(src='aa:aa:aa:aa:aa:aa')/arp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2' OK
 match: 05_ETH_TYPE
     ethernet(ethertype=0x0800)/ipv4/tcp-->'eth_type=0x0800,actions=output:2'                             OK
     ethernet(ethertype=0x0800)/ipv4/tcp-->'eth_type=0x0800,actions=output:CONTROLLER'                    OK
-    ethernet(ethertype=0x0800)/ipv4/tcp-->'eth_type=0x0806,actions=output:2'                             ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(ethertype=0x0800)/ipv4/tcp-->'eth_type=0x0806,actions=output:2'                             OK
     ethernet(ethertype=0x86dd)/ipv6/tcp-->'eth_type=0x86dd,actions=output:2'                             OK
     ethernet(ethertype=0x86dd)/ipv6/tcp-->'eth_type=0x86dd,actions=output:CONTROLLER'                    OK
-    ethernet(ethertype=0x86dd)/ipv6/tcp-->'eth_type=0x0806,actions=output:2'                             ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(ethertype=0x86dd)/ipv6/tcp-->'eth_type=0x0806,actions=output:2'                             OK
     ethernet(ethertype=0x0806)/arp-->'eth_type=0x0806,actions=output:2'                                  OK
     ethernet(ethertype=0x0806)/arp-->'eth_type=0x0806,actions=output:CONTROLLER'                         OK
-    ethernet(ethertype=0x0806)/arp-->'eth_type=0x0800,actions=output:2'                                  ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet(ethertype=0x0806)/arp-->'eth_type=0x0800,actions=output:2'                                  OK
 match: 06_VLAN_VID
     ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=100,actions=output:2'                                    OK
     ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=100,actions=output:CONTROLLER'                           OK
-    ethernet/vlan(vid=203)/ipv4/tcp-->'vlan_vid=100,actions=output:2'                                    ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(vid=203)/ipv4/tcp-->'vlan_vid=100,actions=output:2'                                    OK
     ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=100,actions=output:2'                                    OK
     ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=100,actions=output:CONTROLLER'                           OK
-    ethernet/vlan(vid=203)/ipv6/tcp-->'vlan_vid=100,actions=output:2'                                    ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(vid=203)/ipv6/tcp-->'vlan_vid=100,actions=output:2'                                    OK
     ethernet/vlan(vid=100)/arp-->'vlan_vid=100,actions=output:2'                                         OK
     ethernet/vlan(vid=100)/arp-->'vlan_vid=100,actions=output:CONTROLLER'                                OK
-    ethernet/vlan(vid=203)/arp-->'vlan_vid=100,actions=output:2'                                         ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(vid=203)/arp-->'vlan_vid=100,actions=output:2'                                         OK
 match: 06_VLAN_VID (Mask)
     ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'                          OK
     ethernet/vlan(vid=100)/ipv4/tcp-->'vlan_vid=96(mask=0xf0),actions=output:CONTROLLER'                 OK
-    ethernet/vlan(vid=203)/ipv4/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'                          ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(vid=203)/ipv4/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'                          OK
     ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'                          OK
     ethernet/vlan(vid=100)/ipv6/tcp-->'vlan_vid=96(mask=0xf0),actions=output:CONTROLLER'                 OK
-    ethernet/vlan(vid=203)/ipv6/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'                          ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(vid=203)/ipv6/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'                          OK
     ethernet/vlan(vid=100)/arp-->'vlan_vid=96(mask=0xf0),actions=output:2'                               OK
     ethernet/vlan(vid=100)/arp-->'vlan_vid=96(mask=0xf0),actions=output:CONTROLLER'                      OK
-    ethernet/vlan(vid=203)/arp-->'vlan_vid=96(mask=0xf0),actions=output:2'                               ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(vid=203)/arp-->'vlan_vid=96(mask=0xf0),actions=output:2'                               OK
 match: 07_VLAN_PCP
     ethernet/vlan(pcp=3)/ipv4/tcp-->'vlan_pcp=3,actions=output:2'                                        OK
     ethernet/vlan(pcp=3)/ipv4/tcp-->'vlan_pcp=3,actions=output:CONTROLLER'                               OK
-    ethernet/vlan(pcp=5)/ipv4/tcp-->'vlan_pcp=3,actions=output:2'                                        ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(pcp=5)/ipv4/tcp-->'vlan_pcp=3,actions=output:2'                                        OK
     ethernet/vlan(pcp=3)/ipv6/tcp-->'vlan_pcp=3,actions=output:2'                                        OK
     ethernet/vlan(pcp=3)/ipv6/tcp-->'vlan_pcp=3,actions=output:CONTROLLER'                               OK
-    ethernet/vlan(pcp=5)/ipv6/tcp-->'vlan_pcp=3,actions=output:2'                                        ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(pcp=5)/ipv6/tcp-->'vlan_pcp=3,actions=output:2'                                        OK
     ethernet/vlan(pcp=3)/arp-->'vlan_pcp=3,actions=output:2'                                             OK
     ethernet/vlan(pcp=3)/arp-->'vlan_pcp=3,actions=output:CONTROLLER'                                    OK
-    ethernet/vlan(pcp=5)/arp-->'vlan_pcp=3,actions=output:2'                                             ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan(pcp=5)/arp-->'vlan_pcp=3,actions=output:2'                                             OK
 match: 08_IP_DSCP (IPv4)
     ethernet/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=output:2'                                             OK
     ethernet/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=output:CONTROLLER'                                    OK
     ethernet/ipv4(tos=65)/tcp-->'ip_dscp=8,actions=output:2'                                             ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=output:2'                                        OK
     ethernet/vlan/ipv4(tos=32)/tcp-->'ip_dscp=8,actions=output:CONTROLLER'                               OK
     ethernet/vlan/ipv4(tos=65)/tcp-->'ip_dscp=8,actions=output:2'                                        ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4(tos=32)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_dscp=8,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(tos=32)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_dscp=8,actions=output:CONTROLLER' ERROR
@@ -680,11 +653,11 @@ match: 08_IP_DSCP (IPv6)
     ethernet/ipv6(traffic_class=32)/tcp-->'ip_dscp=8,actions=output:2'                                   OK
     ethernet/ipv6(traffic_class=32)/tcp-->'ip_dscp=8,actions=output:CONTROLLER'                          OK
     ethernet/ipv6(traffic_class=65)/tcp-->'ip_dscp=8,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(traffic_class=32)/tcp-->'ip_dscp=8,actions=output:2'                              OK
     ethernet/vlan/ipv6(traffic_class=32)/tcp-->'ip_dscp=8,actions=output:CONTROLLER'                     OK
     ethernet/vlan/ipv6(traffic_class=65)/tcp-->'ip_dscp=8,actions=output:2'                              ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(traffic_class=32)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_dscp=8,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(traffic_class=32)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_dscp=8,actions=output:CONTROLLER' ERROR
@@ -699,11 +672,11 @@ match: 09_IP_ECN (IPv4)
     ethernet/ipv4(tos=32)/tcp-->'ip_ecn=0,actions=output:2'                                              OK
     ethernet/ipv4(tos=32)/tcp-->'ip_ecn=0,actions=output:CONTROLLER'                                     OK
     ethernet/ipv4(tos=65)/tcp-->'ip_ecn=0,actions=output:2'                                              ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv4(tos=32)/tcp-->'ip_ecn=0,actions=output:2'                                         OK
     ethernet/vlan/ipv4(tos=32)/tcp-->'ip_ecn=0,actions=output:CONTROLLER'                                OK
     ethernet/vlan/ipv4(tos=65)/tcp-->'ip_ecn=0,actions=output:2'                                         ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4(tos=32)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_ecn=0,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(tos=32)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_ecn=0,actions=output:CONTROLLER' ERROR
@@ -718,11 +691,11 @@ match: 09_IP_ECN (IPv6)
     ethernet/ipv6(traffic_class=32)/tcp-->'ip_ecn=0,actions=output:2'                                    OK
     ethernet/ipv6(traffic_class=32)/tcp-->'ip_ecn=0,actions=output:CONTROLLER'                           OK
     ethernet/ipv6(traffic_class=65)/tcp-->'ip_ecn=0,actions=output:2'                                    ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(traffic_class=32)/tcp-->'ip_ecn=0,actions=output:2'                               OK
     ethernet/vlan/ipv6(traffic_class=32)/tcp-->'ip_ecn=0,actions=output:CONTROLLER'                      OK
     ethernet/vlan/ipv6(traffic_class=65)/tcp-->'ip_ecn=0,actions=output:2'                               ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(traffic_class=32)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_ecn=0,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(traffic_class=32)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_ecn=0,actions=output:CONTROLLER' ERROR
@@ -736,12 +709,10 @@ match: 09_IP_ECN (IPv6)
 match: 10_IP_PROTO (IPv4)
     ethernet/ipv4(proto=6)/tcp-->'ip_proto=6,actions=output:2'                                           OK
     ethernet/ipv4(proto=6)/tcp-->'ip_proto=6,actions=output:CONTROLLER'                                  OK
-    ethernet/ipv4(proto=6)/tcp-->'ip_proto=17,actions=output:2'                                          ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4(proto=6)/tcp-->'ip_proto=17,actions=output:2'                                          OK
     ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=6,actions=output:2'                                      OK
     ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=6,actions=output:CONTROLLER'                             OK
-    ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=17,actions=output:2'                                     ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=17,actions=output:2'                                     OK
     ethernet/mpls/ipv4(proto=6)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_proto=6,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(proto=6)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ip_proto=6,actions=output:CONTROLLER' ERROR
@@ -757,14 +728,12 @@ match: 10_IP_PROTO (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6(nxt=6)/tcp-->'ip_proto=6,actions=output:CONTROLLER'                                    ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6(nxt=6)/tcp-->'ip_proto=17,actions=output:2'                                            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6(nxt=6)/tcp-->'ip_proto=17,actions=output:2'                                            OK
     ethernet/vlan/ipv6(nxt=6)/tcp-->'ip_proto=6,actions=output:2'                                        ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6(nxt=6)/tcp-->'ip_proto=6,actions=output:CONTROLLER'                               ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6(nxt=6)/tcp-->'ip_proto=17,actions=output:2'                                       ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6(nxt=6)/tcp-->'ip_proto=17,actions=output:2'                                       OK
     ethernet/mpls/ipv6(nxt=6)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_proto=6,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(nxt=6)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ip_proto=6,actions=output:CONTROLLER' ERROR
@@ -778,12 +747,10 @@ match: 10_IP_PROTO (IPv6)
 match: 11_IPV4_SRC
     ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'                   OK
     ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:CONTROLLER'          OK
-    ethernet/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'                     ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'                     OK
     ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'              OK
     ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:CONTROLLER'     OK
-    ethernet/vlan/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'                ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'                OK
     ethernet/mpls/ipv4(src='192.168.10.10')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_src=192.168.10.10,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(src='192.168.10.10')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_src=192.168.10.10,actions=output:CONTROLLER' ERROR
@@ -797,12 +764,10 @@ match: 11_IPV4_SRC
 match: 11_IPV4_SRC (Mask)
     ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2' OK
     ethernet/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:CONTROLLER' OK
-    ethernet/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2'  ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2'  OK
     ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2' OK
     ethernet/vlan/ipv4(src='192.168.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:CONTROLLER' OK
-    ethernet/vlan/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2' OK
     ethernet/mpls/ipv4(src='192.168.10.10')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(src='192.168.10.10')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:CONTROLLER' ERROR
@@ -816,12 +781,10 @@ match: 11_IPV4_SRC (Mask)
 match: 12_IPV4_DST
     ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'                   OK
     ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:CONTROLLER'          OK
-    ethernet/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'                     ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'                     OK
     ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'              OK
     ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:CONTROLLER'     OK
-    ethernet/vlan/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'                ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'                OK
     ethernet/mpls/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_dst=192.168.20.20,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_dst=192.168.20.20,actions=output:CONTROLLER' ERROR
@@ -835,12 +798,10 @@ match: 12_IPV4_DST
 match: 12_IPV4_DST (Mask)
     ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2' OK
     ethernet/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:CONTROLLER' OK
-    ethernet/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2'  ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2'  OK
     ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2' OK
     ethernet/vlan/ipv4(dst='192.168.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:CONTROLLER' OK
-    ethernet/vlan/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2' OK
     ethernet/mpls/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4(dst='192.168.20.20')/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:CONTROLLER' ERROR
@@ -854,12 +815,10 @@ match: 12_IPV4_DST (Mask)
 match: 13_TCP_SRC (IPv4)
     ethernet/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=output:2'                                 OK
     ethernet/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=output:CONTROLLER'                        OK
-    ethernet/ipv4/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                                 OK
     ethernet/vlan/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=output:2'                            OK
     ethernet/vlan/ipv4/tcp(src_port=11111)-->'tcp_src=11111,actions=output:CONTROLLER'                   OK
-    ethernet/vlan/ipv4/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                            OK
     ethernet/mpls/ipv4/tcp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_src=11111,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/tcp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_src=11111,actions=output:CONTROLLER' ERROR
@@ -875,14 +834,12 @@ match: 13_TCP_SRC (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/tcp(src_port=11111)-->'tcp_src=11111,actions=output:CONTROLLER'                        ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                                 OK
     ethernet/vlan/ipv6/tcp(src_port=11111)-->'tcp_src=11111,actions=output:2'                            ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/tcp(src_port=11111)-->'tcp_src=11111,actions=output:CONTROLLER'                   ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'                            OK
     ethernet/mpls/ipv6/tcp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,tcp_src=11111,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/tcp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,tcp_src=11111,actions=output:CONTROLLER' ERROR
@@ -896,12 +853,10 @@ match: 13_TCP_SRC (IPv6)
 match: 14_TCP_DST (IPv4)
     ethernet/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:2'                                   OK
     ethernet/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:CONTROLLER'                          OK
-    ethernet/ipv4/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                                   OK
     ethernet/vlan/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:2'                              OK
     ethernet/vlan/ipv4/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:CONTROLLER'                     OK
-    ethernet/vlan/ipv4/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                              ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                              OK
     ethernet/mpls/ipv4/tcp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_dst=2222,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/tcp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,tcp_dst=2222,actions=output:CONTROLLER' ERROR
@@ -917,14 +872,12 @@ match: 14_TCP_DST (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:CONTROLLER'                          ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                                   OK
     ethernet/vlan/ipv6/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:2'                              ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/tcp(dst_port=2222)-->'tcp_dst=2222,actions=output:CONTROLLER'                     ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                              ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'                              OK
     ethernet/mpls/ipv6/tcp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,tcp_dst=2222,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/tcp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,tcp_dst=2222,actions=output:CONTROLLER' ERROR
@@ -938,12 +891,10 @@ match: 14_TCP_DST (IPv6)
 match: 15_UDP_SRC (IPv4)
     ethernet/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=output:2'                                 OK
     ethernet/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=output:CONTROLLER'                        OK
-    ethernet/ipv4/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv4/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                                 OK
     ethernet/vlan/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=output:2'                            OK
     ethernet/vlan/ipv4/udp(src_port=11111)-->'udp_src=11111,actions=output:CONTROLLER'                   OK
-    ethernet/vlan/ipv4/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv4/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                            OK
     ethernet/mpls/ipv4/udp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_src=11111,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/udp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_src=11111,actions=output:CONTROLLER' ERROR
@@ -959,14 +910,12 @@ match: 15_UDP_SRC (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/udp(src_port=11111)-->'udp_src=11111,actions=output:CONTROLLER'                        ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                                 OK
     ethernet/vlan/ipv6/udp(src_port=11111)-->'udp_src=11111,actions=output:2'                            ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/udp(src_port=11111)-->'udp_src=11111,actions=output:CONTROLLER'                   ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/udp(src_port=12345)-->'udp_src=11111,actions=output:2'                            OK
     ethernet/mpls/ipv6/udp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,udp_src=11111,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/udp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,udp_src=11111,actions=output:CONTROLLER' ERROR
@@ -983,13 +932,13 @@ match: 16_UDP_DST (IPv4)
     ethernet/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=output:CONTROLLER'                          ERROR
         Receiving timeout: no packet-in.
     ethernet/ipv4/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=output:2'                              ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv4/udp(dst_port=2222)-->'udp_dst=2222,actions=output:CONTROLLER'                     ERROR
         Receiving timeout: no packet-in.
     ethernet/vlan/ipv4/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'                              ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/udp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_dst=2222,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/udp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,udp_dst=2222,actions=output:CONTROLLER' ERROR
@@ -1005,14 +954,12 @@ match: 16_UDP_DST (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/udp(dst_port=2222)-->'udp_dst=2222,actions=output:CONTROLLER'                          ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'                                   OK
     ethernet/vlan/ipv6/udp(dst_port=2222)-->'udp_dst=2222,actions=output:2'                              ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/udp(dst_port=2222)-->'udp_dst=2222,actions=output:CONTROLLER'                     ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'                              ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'                              OK
     ethernet/mpls/ipv6/udp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,udp_dst=2222,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/udp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,udp_dst=2222,actions=output:CONTROLLER' ERROR
@@ -1027,11 +974,11 @@ match: 17_SCTP_SRC (IPv4)
     ethernet/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=output:2'                               OK
     ethernet/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=output:CONTROLLER'                      OK
     ethernet/ipv4/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'                               ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=output:2'                          OK
     ethernet/vlan/ipv4/sctp(src_port=11111)-->'sctp_src=11111,actions=output:CONTROLLER'                 OK
     ethernet/vlan/ipv4/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'                          ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/sctp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,sctp_src=11111,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/sctp(src_port=11111)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,sctp_src=11111,actions=output:CONTROLLER' ERROR
@@ -1047,14 +994,12 @@ match: 17_SCTP_SRC (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/sctp(src_port=11111)-->'sctp_src=11111,actions=output:CONTROLLER'                      ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'                               ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'                               OK
     ethernet/vlan/ipv6/sctp(src_port=11111)-->'sctp_src=11111,actions=output:2'                          ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/sctp(src_port=11111)-->'sctp_src=11111,actions=output:CONTROLLER'                 ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'                          ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'                          OK
     ethernet/mpls/ipv6/sctp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,sctp_src=11111,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/sctp(src_port=11111)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,sctp_src=11111,actions=output:CONTROLLER' ERROR
@@ -1069,11 +1014,11 @@ match: 18_SCTP_DST (IPv4)
     ethernet/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:2'                                 OK
     ethernet/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:CONTROLLER'                        OK
     ethernet/ipv4/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:2'                            OK
     ethernet/vlan/ipv4/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:CONTROLLER'                   OK
     ethernet/vlan/ipv4/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/sctp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,sctp_dst=2222,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/sctp(dst_port=2222)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,sctp_dst=2222,actions=output:CONTROLLER' ERROR
@@ -1089,14 +1034,12 @@ match: 18_SCTP_DST (IPv6)
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:CONTROLLER'                        ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'                                 OK
     ethernet/vlan/ipv6/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:2'                            ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/sctp(dst_port=2222)-->'sctp_dst=2222,actions=output:CONTROLLER'                   ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'                            OK
     ethernet/mpls/ipv6/sctp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,sctp_dst=2222,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/sctp(dst_port=2222)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,sctp_dst=2222,actions=output:CONTROLLER' ERROR
@@ -1108,14 +1051,18 @@ match: 18_SCTP_DST (IPv6)
         Receiving timeout: no packet-in.
     ethernet/itag/ethernet/ipv6/sctp(dst_port=6789)-->'actions=pop_pbb,goto_table:1','table_id:1,sctp_dst=2222,actions=output:2' OK
 match: 19_ICMPV4_TYPE
-    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                        OK
-    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                               OK
+    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                        ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                               ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
     ethernet/ipv4/icmp(type=3)-->'icmpv4_type=8,actions=output:2'                                        ERROR
-        Table-miss error: no change in lookup_count.
-    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                   OK
-    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                          OK
+        Table-miss error: increment in matched_count.
+    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'                                   ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'                          ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
     ethernet/vlan/ipv4/icmp(type=3)-->'icmpv4_type=8,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/icmp(type=8)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_type=8,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/icmp(type=8)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_type=8,actions=output:CONTROLLER' ERROR
@@ -1127,14 +1074,18 @@ match: 19_ICMPV4_TYPE
         Receiving timeout: no packet-in.
     ethernet/itag/ethernet/ipv4/icmp(type=3)-->'actions=pop_pbb,goto_table:1','table_id:1,icmpv4_type=8,actions=output:2' OK
 match: 20_ICMPV4_CODE
-    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                        OK
-    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                               OK
+    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                        ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                               ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
     ethernet/ipv4/icmp(code=1)-->'icmpv4_code=0,actions=output:2'                                        ERROR
-        Table-miss error: no change in lookup_count.
-    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                   OK
-    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                          OK
+        Table-miss error: increment in matched_count.
+    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'                                   ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
+    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'                          ERROR
+        Received incorrect packet: Encounter an error during packet comparison. it is malformed.
     ethernet/vlan/ipv4/icmp(code=1)-->'icmpv4_code=0,actions=output:2'                                   ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv4/icmp(code=0)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_code=0,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv4/icmp(code=0)-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,icmpv4_code=0,actions=output:CONTROLLER' ERROR
@@ -1149,11 +1100,11 @@ match: 21_ARP_OP
     ethernet/arp(opcode=1)-->'arp_op=1,actions=output:2'                                                 OK
     ethernet/arp(opcode=1)-->'arp_op=1,actions=output:CONTROLLER'                                        OK
     ethernet/arp(opcode=2)-->'arp_op=1,actions=output:2'                                                 ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(opcode=1)-->'arp_op=1,actions=output:2'                                            OK
     ethernet/vlan/arp(opcode=1)-->'arp_op=1,actions=output:CONTROLLER'                                   OK
     ethernet/vlan/arp(opcode=2)-->'arp_op=1,actions=output:2'                                            ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(opcode=1)-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_op=1,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(opcode=1)-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_op=1,actions=output:CONTROLLER' ERROR
@@ -1168,11 +1119,11 @@ match: 22_ARP_SPA
     ethernet/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.10,actions=output:2'                      OK
     ethernet/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.10,actions=output:CONTROLLER'             OK
     ethernet/arp(src_ip='10.10.10.10')-->'arp_spa=192.168.10.10,actions=output:2'                        ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.10,actions=output:2'                 OK
     ethernet/vlan/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.10,actions=output:CONTROLLER'        OK
     ethernet/vlan/arp(src_ip='10.10.10.10')-->'arp_spa=192.168.10.10,actions=output:2'                   ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(src_ip='192.168.10.10')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_spa=192.168.10.10,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(src_ip='192.168.10.10')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_spa=192.168.10.10,actions=output:CONTROLLER' ERROR
@@ -1187,11 +1138,11 @@ match: 22_ARP_SPA (Mask)
     ethernet/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:2'   OK
     ethernet/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:CONTROLLER' OK
     ethernet/arp(src_ip='10.10.10.10')-->'arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:2'     ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:2' OK
     ethernet/vlan/arp(src_ip='192.168.10.10')-->'arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:CONTROLLER' OK
     ethernet/vlan/arp(src_ip='10.10.10.10')-->'arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(src_ip='192.168.10.10')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(src_ip='192.168.10.10')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_spa=192.168.10.0(mask=255.255.255.0),actions=output:CONTROLLER' ERROR
@@ -1206,11 +1157,11 @@ match: 23_ARP_TPA
     ethernet/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.20.20,actions=output:2'                      OK
     ethernet/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.20.20,actions=output:CONTROLLER'             OK
     ethernet/arp(dst_ip='10.10.20.20')-->'arp_tpa=192.168.20.20,actions=output:2'                        ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.20.20,actions=output:2'                 OK
     ethernet/vlan/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.20.20,actions=output:CONTROLLER'        OK
     ethernet/vlan/arp(dst_ip='10.10.20.20')-->'arp_tpa=192.168.20.20,actions=output:2'                   ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(dst_ip='192.168.20.20')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tpa=192.168.20.20,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(dst_ip='192.168.20.20')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tpa=192.168.20.20,actions=output:CONTROLLER' ERROR
@@ -1225,11 +1176,11 @@ match: 23_ARP_TPA (Mask)
     ethernet/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:2'   OK
     ethernet/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:CONTROLLER' OK
     ethernet/arp(dst_ip='10.10.20.20')-->'arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:2'     ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:2' OK
     ethernet/vlan/arp(dst_ip='192.168.20.20')-->'arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:CONTROLLER' OK
     ethernet/vlan/arp(dst_ip='10.10.20.20')-->'arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(dst_ip='192.168.20.20')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(dst_ip='192.168.20.20')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tpa=192.168.0.20(mask=255.255.0.255),actions=output:CONTROLLER' ERROR
@@ -1244,11 +1195,11 @@ match: 24_ARP_SHA
     ethernet/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:11:11:11,actions=output:2'             OK
     ethernet/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:11:11:11,actions=output:CONTROLLER'    OK
     ethernet/arp(src_mac='aa:aa:aa:aa:aa:aa')-->'arp_sha=12:11:11:11:11:11,actions=output:2'             ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:11:11:11,actions=output:2'        OK
     ethernet/vlan/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:11:11:11,actions=output:CONTROLLER' OK
     ethernet/vlan/arp(src_mac='aa:aa:aa:aa:aa:aa')-->'arp_sha=12:11:11:11:11:11,actions=output:2'        ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(src_mac='12:11:11:11:11:11')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_sha=12:11:11:11:11:11,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(src_mac='12:11:11:11:11:11')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_sha=12:11:11:11:11:11,actions=output:CONTROLLER' ERROR
@@ -1263,11 +1214,11 @@ match: 24_ARP_SHA (Mask)
     ethernet/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:2' OK
     ethernet/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:CONTROLLER' OK
     ethernet/arp(src_mac='aa:aa:aa:aa:aa:aa')-->'arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:2' OK
     ethernet/vlan/arp(src_mac='12:11:11:11:11:11')-->'arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:CONTROLLER' OK
     ethernet/vlan/arp(src_mac='aa:aa:aa:aa:aa:aa')-->'arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(src_mac='12:11:11:11:11:11')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(src_mac='12:11:11:11:11:11')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_sha=12:11:11:00:11:11(mask=ff:ff:ff:00:ff:ff),actions=output:CONTROLLER' ERROR
@@ -1282,11 +1233,11 @@ match: 25_ARP_THA
     ethernet/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:22:22:22:22,actions=output:2'             OK
     ethernet/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:22:22:22:22,actions=output:CONTROLLER'    OK
     ethernet/arp(dst_mac='ba:bb:bb:bb:bb:bb')-->'arp_tha=22:22:22:22:22:22,actions=output:2'             ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:22:22:22:22,actions=output:2'        OK
     ethernet/vlan/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:22:22:22:22,actions=output:CONTROLLER' OK
     ethernet/vlan/arp(dst_mac='ba:bb:bb:bb:bb:bb')-->'arp_tha=22:22:22:22:22:22,actions=output:2'        ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(dst_mac='22:22:22:22:22:22')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tha=22:22:22:22:22:22,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(dst_mac='22:22:22:22:22:22')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tha=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
@@ -1301,11 +1252,11 @@ match: 25_ARP_THA (Mask)
     ethernet/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:2' OK
     ethernet/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:CONTROLLER' OK
     ethernet/arp(dst_mac='ba:bb:bb:bb:bb:bb')-->'arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:2' OK
     ethernet/vlan/arp(dst_mac='22:22:22:22:22:22')-->'arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:CONTROLLER' OK
     ethernet/vlan/arp(dst_mac='ba:bb:bb:bb:bb:bb')-->'arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/arp(dst_mac='22:22:22:22:22:22')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/arp(dst_mac='22:22:22:22:22:22')-->'actions=pop_mpls:0x0806,goto_table:1','table_id:1,arp_tha=22:22:00:22:22:22(mask=ff:ff:00:ff:ff:ff),actions=output:CONTROLLER' ERROR
@@ -1320,11 +1271,11 @@ match: 26_IPV6_SRC
     ethernet/ipv6(src='10::10')/tcp-->'ipv6_src=10::10,actions=output:2'                                 OK
     ethernet/ipv6(src='10::10')/tcp-->'ipv6_src=10::10,actions=output:CONTROLLER'                        OK
     ethernet/ipv6(src='a0::a0')/tcp-->'ipv6_src=10::10,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(src='10::10')/tcp-->'ipv6_src=10::10,actions=output:2'                            OK
     ethernet/vlan/ipv6(src='10::10')/tcp-->'ipv6_src=10::10,actions=output:CONTROLLER'                   OK
     ethernet/vlan/ipv6(src='a0::a0')/tcp-->'ipv6_src=10::10,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(src='10::10')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_src=10::10,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(src='10::10')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_src=10::10,actions=output:CONTROLLER' ERROR
@@ -1339,11 +1290,11 @@ match: 26_IPV6_SRC (Mask)
     ethernet/ipv6(src='10::10')/tcp-->'ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:2' OK
     ethernet/ipv6(src='10::10')/tcp-->'ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:CONTROLLER' OK
     ethernet/ipv6(src='a0::a0')/tcp-->'ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(src='10::10')/tcp-->'ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:2' OK
     ethernet/vlan/ipv6(src='10::10')/tcp-->'ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:CONTROLLER' OK
     ethernet/vlan/ipv6(src='a0::a0')/tcp-->'ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(src='10::10')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(src='10::10')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_src=10::0(mask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:0),actions=output:CONTROLLER' ERROR
@@ -1358,11 +1309,11 @@ match: 27_IPV6_DST
     ethernet/ipv6(dst='20::20')/tcp-->'ipv6_dst=20::20,actions=output:2'                                 OK
     ethernet/ipv6(dst='20::20')/tcp-->'ipv6_dst=20::20,actions=output:CONTROLLER'                        OK
     ethernet/ipv6(dst='b0::b0')/tcp-->'ipv6_dst=20::20,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(dst='20::20')/tcp-->'ipv6_dst=20::20,actions=output:2'                            OK
     ethernet/vlan/ipv6(dst='20::20')/tcp-->'ipv6_dst=20::20,actions=output:CONTROLLER'                   OK
     ethernet/vlan/ipv6(dst='b0::b0')/tcp-->'ipv6_dst=20::20,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(dst='20::20')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_dst=20::20,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(dst='20::20')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_dst=20::20,actions=output:CONTROLLER' ERROR
@@ -1377,11 +1328,11 @@ match: 27_IPV6_DST (Mask)
     ethernet/ipv6(dst='20::20')/tcp-->'ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:2' OK
     ethernet/ipv6(dst='20::20')/tcp-->'ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:CONTROLLER' OK
     ethernet/ipv6(dst='b0::b0')/tcp-->'ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(dst='20::20')/tcp-->'ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:2' OK
     ethernet/vlan/ipv6(dst='20::20')/tcp-->'ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:CONTROLLER' OK
     ethernet/vlan/ipv6(dst='b0::b0')/tcp-->'ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(dst='20::20')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(dst='20::20')/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_dst=0::20(mask=0:ffff:ffff:ffff:ffff:ffff:ffff:ffff),actions=output:CONTROLLER' ERROR
@@ -1396,11 +1347,11 @@ match: 28_IPV6_FLABEL
     ethernet/ipv6(flow_label=100)/tcp-->'ipv6_flabel=100,actions=output:2'                               OK
     ethernet/ipv6(flow_label=100)/tcp-->'ipv6_flabel=100,actions=output:CONTROLLER'                      OK
     ethernet/ipv6(flow_label=203)/tcp-->'ipv6_flabel=100,actions=output:2'                               ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(flow_label=100)/tcp-->'ipv6_flabel=100,actions=output:2'                          OK
     ethernet/vlan/ipv6(flow_label=100)/tcp-->'ipv6_flabel=100,actions=output:CONTROLLER'                 OK
     ethernet/vlan/ipv6(flow_label=203)/tcp-->'ipv6_flabel=100,actions=output:2'                          ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(flow_label=100)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_flabel=100,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(flow_label=100)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_flabel=100,actions=output:CONTROLLER' ERROR
@@ -1415,11 +1366,11 @@ match: 28_IPV6_FLABEL (Mask)
     ethernet/ipv6(flow_label=100)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:2'               OK
     ethernet/ipv6(flow_label=100)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:CONTROLLER'      OK
     ethernet/ipv6(flow_label=203)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:2'               ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(flow_label=100)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:2'          OK
     ethernet/vlan/ipv6(flow_label=100)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:CONTROLLER' OK
     ethernet/vlan/ipv6(flow_label=203)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:2'          ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(flow_label=100)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_flabel=96(mask=0x000ffff0),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(flow_label=100)/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_flabel=96(mask=0x000ffff0),actions=output:CONTROLLER' ERROR
@@ -1435,14 +1386,12 @@ match: 29_ICMPV6_TYPE
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/icmpv6(type=128)-->'icmpv6_type=128,actions=output:CONTROLLER'                         ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/icmpv6(type=135)-->'icmpv6_type=128,actions=output:2'                                  ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/icmpv6(type=135)-->'icmpv6_type=128,actions=output:2'                                  OK
     ethernet/vlan/ipv6/icmpv6(type=128)-->'icmpv6_type=128,actions=output:2'                             ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/icmpv6(type=128)-->'icmpv6_type=128,actions=output:CONTROLLER'                    ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/icmpv6(type=135)-->'icmpv6_type=128,actions=output:2'                             ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/icmpv6(type=135)-->'icmpv6_type=128,actions=output:2'                             OK
     ethernet/mpls/ipv6/icmpv6(type=128)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,icmpv6_type=128,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/icmpv6(type=128)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,icmpv6_type=128,actions=output:CONTROLLER' ERROR
@@ -1458,14 +1407,12 @@ match: 30_ICMPV6_CODE
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/icmpv6(code=0)-->'icmpv6_code=0,actions=output:CONTROLLER'                             ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/icmpv6(code=1)-->'icmpv6_code=0,actions=output:2'                                      ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/icmpv6(code=1)-->'icmpv6_code=0,actions=output:2'                                      OK
     ethernet/vlan/ipv6/icmpv6(code=0)-->'icmpv6_code=0,actions=output:2'                                 ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/icmpv6(code=0)-->'icmpv6_code=0,actions=output:CONTROLLER'                        ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/icmpv6(code=1)-->'icmpv6_code=0,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/icmpv6(code=1)-->'icmpv6_code=0,actions=output:2'                                 OK
     ethernet/mpls/ipv6/icmpv6(code=0)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,icmpv6_code=0,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/icmpv6(code=0)-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,icmpv6_code=0,actions=output:CONTROLLER' ERROR
@@ -1481,14 +1428,12 @@ match: 31_IPV6_ND_TARGET
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/icmpv6(data=nd_neighbor(dst='20::20'))-->'ipv6_nd_target=20::20,actions=output:CONTROLLER' ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/icmpv6(data=nd_neighbor(dst='b0::b0'))-->'ipv6_nd_target=20::20,actions=output:2'      ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/icmpv6(data=nd_neighbor(dst='b0::b0'))-->'ipv6_nd_target=20::20,actions=output:2'      OK
     ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(dst='20::20'))-->'ipv6_nd_target=20::20,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(dst='20::20'))-->'ipv6_nd_target=20::20,actions=output:CONTROLLER' ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(dst='b0::b0'))-->'ipv6_nd_target=20::20,actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(dst='b0::b0'))-->'ipv6_nd_target=20::20,actions=output:2' OK
     ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(dst='20::20'))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_target=20::20,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(dst='20::20'))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_target=20::20,actions=output:CONTROLLER' ERROR
@@ -1504,14 +1449,12 @@ match: 32_IPV6_ND_SLL
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2' OK
     ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2' OK
     ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='22:22:22:22:22:22')))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_sll=22:22:22:22:22:22,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='22:22:22:22:22:22')))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_sll=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
@@ -1527,14 +1470,12 @@ match: 33_IPV6_ND_TLL
         Receiving timeout: no change in tx_packets on target.
     ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
         Receiving timeout: no packet-in.
-    ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2' OK
     ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
         Receiving timeout: no packet-in.
-    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2' OK
     ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_tll=22:22:22:22:22:22,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='22:22:22:22:22:22')))-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_nd_tll=22:22:22:22:22:22,actions=output:CONTROLLER' ERROR
@@ -1549,67 +1490,67 @@ match: 34_MPLS_LABEL
     ethernet/mpls(label=100)/ipv4/tcp-->'mpls_label=100,actions=output:2'                                OK
     ethernet/mpls(label=100)/ipv4/tcp-->'mpls_label=100,actions=output:CONTROLLER'                       OK
     ethernet/mpls(label=203)/ipv4/tcp-->'mpls_label=100,actions=output:2'                                ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls(label=100)/ipv6/tcp-->'mpls_label=100,actions=output:2'                                OK
     ethernet/mpls(label=100)/ipv6/tcp-->'mpls_label=100,actions=output:CONTROLLER'                       OK
     ethernet/mpls(label=203)/ipv6/tcp-->'mpls_label=100,actions=output:2'                                ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls(label=100)/arp-->'mpls_label=100,actions=output:2'                                     OK
     ethernet/mpls(label=100)/arp-->'mpls_label=100,actions=output:CONTROLLER'                            OK
     ethernet/mpls(label=203)/arp-->'mpls_label=100,actions=output:2'                                     ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
 match: 35_MPLS_TC
     ethernet/mpls(exp=3)/ipv4/tcp-->'mpls_tc=3,actions=output:2'                                         OK
     ethernet/mpls(exp=3)/ipv4/tcp-->'mpls_tc=3,actions=output:CONTROLLER'                                OK
     ethernet/mpls(exp=5)/ipv4/tcp-->'mpls_tc=3,actions=output:2'                                         ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls(exp=3)/ipv6/tcp-->'mpls_tc=3,actions=output:2'                                         OK
     ethernet/mpls(exp=3)/ipv6/tcp-->'mpls_tc=3,actions=output:CONTROLLER'                                OK
     ethernet/mpls(exp=5)/ipv6/tcp-->'mpls_tc=3,actions=output:2'                                         ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls(exp=3)/arp-->'mpls_tc=3,actions=output:2'                                              OK
     ethernet/mpls(exp=3)/arp-->'mpls_tc=3,actions=output:CONTROLLER'                                     OK
     ethernet/mpls(exp=5)/arp-->'mpls_tc=3,actions=output:2'                                              ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
 match: 36_MPLS_BOS
     ethernet/mpls(bsb=1)/ipv4/tcp-->'mpls_bos=1,actions=output:2'                                        OK
     ethernet/mpls(bsb=1)/ipv4/tcp-->'mpls_bos=1,actions=output:CONTROLLER'                               OK
     ethernet/mpls(bsb=0)/mpls(bsb=1)/ipv4/tcp-->'mpls_bos=1,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls(bsb=1)/ipv6/tcp-->'mpls_bos=1,actions=output:2'                                        OK
     ethernet/mpls(bsb=1)/ipv6/tcp-->'mpls_bos=1,actions=output:CONTROLLER'                               OK
     ethernet/mpls(bsb=0)/mpls(bsb=1)/ipv6/tcp-->'mpls_bos=1,actions=output:2'                            ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls(bsb=1)/arp-->'mpls_bos=1,actions=output:2'                                             OK
     ethernet/mpls(bsb=1)/arp-->'mpls_bos=1,actions=output:CONTROLLER'                                    OK
     ethernet/mpls(bsb=0)/mpls(bsb=1)/arp-->'mpls_bos=1,actions=output:2'                                 ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
 match: 37_PBB_ISID
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_isid=100,actions=output:2'          OK
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_isid=100,actions=output:CONTROLLER' OK
     ethernet/svlan/itag(sid=203)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_isid=100,actions=output:2'          ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_isid=100,actions=output:2'          OK
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_isid=100,actions=output:CONTROLLER' OK
     ethernet/svlan/itag(sid=203)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_isid=100,actions=output:2'          ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_isid=100,actions=output:2'               OK
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_isid=100,actions=output:CONTROLLER'      OK
     ethernet/svlan/itag(sid=203)/ethernet/svlan/vlan/arp-->'pbb_isid=100,actions=output:2'               ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
 match: 37_PBB_ISID (Mask)
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_isid=96(mask=0xf0),actions=output:2' OK
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_isid=96(mask=0xf0),actions=output:CONTROLLER' OK
     ethernet/svlan/itag(sid=203)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_isid=96(mask=0xf0),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_isid=96(mask=0xf0),actions=output:2' OK
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_isid=96(mask=0xf0),actions=output:CONTROLLER' OK
     ethernet/svlan/itag(sid=203)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_isid=96(mask=0xf0),actions=output:2' ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_isid=96(mask=0xf0),actions=output:2'     OK
     ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_isid=96(mask=0xf0),actions=output:CONTROLLER' OK
     ethernet/svlan/itag(sid=203)/ethernet/svlan/vlan/arp-->'pbb_isid=96(mask=0xf0),actions=output:2'     ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
 match: 38_TUNNEL_ID
     ethernet/ipv4/tcp-->'actions=set_field:12345->tunnel_id,goto_table:1','table_id:1,tunnel_id=12345,actions=output:2' OK
     ethernet/ipv4/tcp-->'actions=set_field:12345->tunnel_id,goto_table:1','table_id:1,tunnel_id=12345,actions=output:CONTROLLER' OK
@@ -1640,11 +1581,11 @@ match: 39_IPV6_EXTHDR
     ethernet/ipv6(ext_hdrs=[hop_opts,auth]/tcp-->'ipv6_exthdr=68,actions=output:2'                       OK
     ethernet/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=68,actions=output:CONTROLLER'             OK
     ethernet/ipv6/tcp-->'ipv6_exthdr=68,actions=output:2'                                                ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=68,actions=output:2'                 OK
     ethernet/vlan/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=68,actions=output:CONTROLLER'        OK
     ethernet/vlan/ipv6/tcp-->'ipv6_exthdr=68,actions=output:2'                                           ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_exthdr=68,actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_exthdr=68,actions=output:CONTROLLER' ERROR
@@ -1659,11 +1600,11 @@ match: 39_IPV6_EXTHDR (Mask)
     ethernet/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'          OK
     ethernet/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:CONTROLLER' OK
     ethernet/ipv6/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'                                    ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/vlan/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'     OK
     ethernet/vlan/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:CONTROLLER' OK
     ethernet/vlan/ipv6/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'                               ERROR
-        Table-miss error: no change in lookup_count.
+        Table-miss error: increment in matched_count.
     ethernet/mpls/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_exthdr=64(mask=0x1f0),actions=output:2' ERROR
         Receiving timeout: no change in tx_packets on target.
     ethernet/mpls/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_exthdr=64(mask=0x1f0),actions=output:CONTROLLER' ERROR
@@ -1814,7 +1755,7 @@ Failed to add meters(36)
     meter: 02_DSCP_REMARK_01_PKTPS_02_10000  20000pktps(ethernet/ipv4(dscp=18)/tcp)-->'in_port=1,actions=meter:10000pktps(dscp_remark:ip_dscp=20),output:2'
     meter: 02_DSCP_REMARK_01_PKTPS_02_10000  20000pktps(ethernet/ipv6(dscp=18)/tcp)-->'in_port=1,actions=meter:10000pktps(dscp_remark:ip_dscp=20),output:2'
     meter: 02_DSCP_REMARK_01_PKTPS_02_10000  20000pktps(ethernet/arp)-->'in_port=1,actions=meter:20000pktps(dscp_remark:prec_level=1),output:2'
-Received incorrect packet(75)
+Received incorrect packet(83)
     action: 11_COPY_TTL_OUT                  ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_out,output:2'
     action: 11_COPY_TTL_OUT                  ethernet/mpls(ttl=64)/ipv6(hop_limit=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_out,output:2'
     action: 12_COPY_TTL_IN                   ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp-->'eth_type=0x8847,actions=copy_ttl_in,output:2'
@@ -1890,6 +1831,14 @@ Received incorrect packet(75)
     action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv4/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
     action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/ipv6/tcp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
     action: set_field: 37_PBB_ISID           ethernet/svlan/itag(sid=100)/ethernet/svlan/vlan/arp-->'pbb_itag=100,actions=set_field:203->pbb_itag,output:2'
+    match: 19_ICMPV4_TYPE                    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'
+    match: 19_ICMPV4_TYPE                    ethernet/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'
+    match: 19_ICMPV4_TYPE                    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:2'
+    match: 19_ICMPV4_TYPE                    ethernet/vlan/ipv4/icmp(type=8)-->'icmpv4_type=8,actions=output:CONTROLLER'
+    match: 20_ICMPV4_CODE                    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'
+    match: 20_ICMPV4_CODE                    ethernet/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'
+    match: 20_ICMPV4_CODE                    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:2'
+    match: 20_ICMPV4_CODE                    ethernet/vlan/ipv4/icmp(code=0)-->'icmpv4_code=0,actions=output:CONTROLLER'
 Receiving timeout(340)
     action: 23_SET_NW_TTL (IPv4)             ethernet/mpls/ipv4(ttl=64)/tcp-->'actions=pop_mpls:0x0800,goto_table:1','table_id:1,eth_type=0x0800,actions=set_nw_ttl:32,output:2'
     action: 23_SET_NW_TTL (IPv4)             ethernet/itag/ethernet/ipv4(ttl=64)/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,eth_type=0x0800,actions=set_nw_ttl:32,output:2'
@@ -2231,40 +2180,13 @@ Receiving timeout(340)
     match: 39_IPV6_EXTHDR (Mask)             ethernet/mpls/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_mpls:0x86dd,goto_table:1','table_id:1,ipv6_exthdr=64(mask=0x1f0),actions=output:CONTROLLER'
     match: 39_IPV6_EXTHDR (Mask)             ethernet/itag/ethernet/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,actions=pop_pbb,goto_table:1','table_id:1,ipv6_exthdr=64(mask=0x1f0),actions=output:2'
     match: 39_IPV6_EXTHDR (Mask)             ethernet/itag/ethernet/ipv6(ext_hdrs=[hop_opts,auth])/tcp-->'actions=pop_pbb,goto_table:1','table_id:1,ipv6_exthdr=64(mask=0x1f0),actions=output:CONTROLLER'
-Table-miss error(146)
-    match: 00_IN_PORT                        ethernet/ipv4/tcp-->'in_port=2,actions=output:2'
-    match: 00_IN_PORT                        ethernet/ipv6/tcp-->'in_port=2,actions=output:2'
-    match: 00_IN_PORT                        ethernet/arp-->'in_port=2,actions=output:2'
+Table-miss error(79)
     match: 02_METADATA                       ethernet/ipv4/tcp-->'actions=write_metadata:155/0xffffffff,goto_table:1','table_id:1,metadata=255,actions=output:2'
     match: 02_METADATA                       ethernet/ipv6/tcp-->'actions=write_metadata:155/0xffffffff,goto_table:1','table_id:1,metadata=255,actions=output:2'
     match: 02_METADATA                       ethernet/arp-->'actions=write_metadata:155/0xffffffff,goto_table:1','table_id:1,metadata=255,actions=output:2'
     match: 02_METADATA (Mask)                ethernet/ipv4/tcp-->'actions=write_metadata:155/0xffffffff,goto_table:1','table_id:1,metadata=240(mask=0xfffffff0),actions=output:2'
     match: 02_METADATA (Mask)                ethernet/ipv6/tcp-->'actions=write_metadata:155/0xffffffff,goto_table:1','table_id:1,metadata=240(mask=0xfffffff0),actions=output:2'
     match: 02_METADATA (Mask)                ethernet/arp-->'actions=write_metadata:155/0xffffffff,goto_table:1','table_id:1,metadata=240(mask=0xfffffff0),actions=output:2'
-    match: 03_ETH_DST                        ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv4/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'
-    match: 03_ETH_DST                        ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv6/tcp-->'eth_dst=22:22:22:22:22:22,actions=output:2'
-    match: 03_ETH_DST                        ethernet(dst='ba:bb:bb:bb:bb:bb')/arp-->'eth_dst=22:22:22:22:22:22,actions=output:2'
-    match: 03_ETH_DST (Mask)                 ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv4/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2'
-    match: 03_ETH_DST (Mask)                 ethernet(dst='ba:bb:bb:bb:bb:bb')/ipv6/tcp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2'
-    match: 03_ETH_DST (Mask)                 ethernet(dst='ba:bb:bb:bb:bb:bb')/arp-->'eth_dst=22:22:22:22:22:00(mask=ff:ff:ff:ff:ff:00),actions=output:2'
-    match: 04_ETH_SRC                        ethernet(src='aa:aa:aa:aa:aa:aa')/ipv4/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'
-    match: 04_ETH_SRC                        ethernet(src='aa:aa:aa:aa:aa:aa')/ipv6/tcp-->'eth_src=12:11:11:11:11:11,actions=output:2'
-    match: 04_ETH_SRC                        ethernet(src='aa:aa:aa:aa:aa:aa')/arp-->'eth_src=12:11:11:11:11:11,actions=output:2'
-    match: 04_ETH_SRC (Mask)                 ethernet(src='aa:aa:aa:aa:aa:aa')/ipv4/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2'
-    match: 04_ETH_SRC (Mask)                 ethernet(src='aa:aa:aa:aa:aa:aa')/ipv6/tcp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2'
-    match: 04_ETH_SRC (Mask)                 ethernet(src='aa:aa:aa:aa:aa:aa')/arp-->'eth_src=00:11:11:11:11:11(mask=00:ff:ff:ff:ff:ff),actions=output:2'
-    match: 05_ETH_TYPE                       ethernet(ethertype=0x0800)/ipv4/tcp-->'eth_type=0x0806,actions=output:2'
-    match: 05_ETH_TYPE                       ethernet(ethertype=0x86dd)/ipv6/tcp-->'eth_type=0x0806,actions=output:2'
-    match: 05_ETH_TYPE                       ethernet(ethertype=0x0806)/arp-->'eth_type=0x0800,actions=output:2'
-    match: 06_VLAN_VID                       ethernet/vlan(vid=203)/ipv4/tcp-->'vlan_vid=100,actions=output:2'
-    match: 06_VLAN_VID                       ethernet/vlan(vid=203)/ipv6/tcp-->'vlan_vid=100,actions=output:2'
-    match: 06_VLAN_VID                       ethernet/vlan(vid=203)/arp-->'vlan_vid=100,actions=output:2'
-    match: 06_VLAN_VID (Mask)                ethernet/vlan(vid=203)/ipv4/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'
-    match: 06_VLAN_VID (Mask)                ethernet/vlan(vid=203)/ipv6/tcp-->'vlan_vid=96(mask=0xf0),actions=output:2'
-    match: 06_VLAN_VID (Mask)                ethernet/vlan(vid=203)/arp-->'vlan_vid=96(mask=0xf0),actions=output:2'
-    match: 07_VLAN_PCP                       ethernet/vlan(pcp=5)/ipv4/tcp-->'vlan_pcp=3,actions=output:2'
-    match: 07_VLAN_PCP                       ethernet/vlan(pcp=5)/ipv6/tcp-->'vlan_pcp=3,actions=output:2'
-    match: 07_VLAN_PCP                       ethernet/vlan(pcp=5)/arp-->'vlan_pcp=3,actions=output:2'
     match: 08_IP_DSCP (IPv4)                 ethernet/ipv4(tos=65)/tcp-->'ip_dscp=8,actions=output:2'
     match: 08_IP_DSCP (IPv4)                 ethernet/vlan/ipv4(tos=65)/tcp-->'ip_dscp=8,actions=output:2'
     match: 08_IP_DSCP (IPv6)                 ethernet/ipv6(traffic_class=65)/tcp-->'ip_dscp=8,actions=output:2'
@@ -2273,42 +2195,12 @@ Table-miss error(146)
     match: 09_IP_ECN (IPv4)                  ethernet/vlan/ipv4(tos=65)/tcp-->'ip_ecn=0,actions=output:2'
     match: 09_IP_ECN (IPv6)                  ethernet/ipv6(traffic_class=65)/tcp-->'ip_ecn=0,actions=output:2'
     match: 09_IP_ECN (IPv6)                  ethernet/vlan/ipv6(traffic_class=65)/tcp-->'ip_ecn=0,actions=output:2'
-    match: 10_IP_PROTO (IPv4)                ethernet/ipv4(proto=6)/tcp-->'ip_proto=17,actions=output:2'
-    match: 10_IP_PROTO (IPv4)                ethernet/vlan/ipv4(proto=6)/tcp-->'ip_proto=17,actions=output:2'
-    match: 10_IP_PROTO (IPv6)                ethernet/ipv6(nxt=6)/tcp-->'ip_proto=17,actions=output:2'
-    match: 10_IP_PROTO (IPv6)                ethernet/vlan/ipv6(nxt=6)/tcp-->'ip_proto=17,actions=output:2'
-    match: 11_IPV4_SRC                       ethernet/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'
-    match: 11_IPV4_SRC                       ethernet/vlan/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.10,actions=output:2'
-    match: 11_IPV4_SRC (Mask)                ethernet/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2'
-    match: 11_IPV4_SRC (Mask)                ethernet/vlan/ipv4(src='10.10.10.10')/tcp-->'ipv4_src=192.168.10.0(mask=255.255.255.0),actions=output:2'
-    match: 12_IPV4_DST                       ethernet/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'
-    match: 12_IPV4_DST                       ethernet/vlan/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.20.20,actions=output:2'
-    match: 12_IPV4_DST (Mask)                ethernet/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2'
-    match: 12_IPV4_DST (Mask)                ethernet/vlan/ipv4(dst='10.10.20.20')/tcp-->'ipv4_dst=192.168.0.20(mask=255.255.0.255),actions=output:2'
-    match: 13_TCP_SRC (IPv4)                 ethernet/ipv4/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'
-    match: 13_TCP_SRC (IPv4)                 ethernet/vlan/ipv4/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'
-    match: 13_TCP_SRC (IPv6)                 ethernet/ipv6/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'
-    match: 13_TCP_SRC (IPv6)                 ethernet/vlan/ipv6/tcp(src_port=12345)-->'tcp_src=11111,actions=output:2'
-    match: 14_TCP_DST (IPv4)                 ethernet/ipv4/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'
-    match: 14_TCP_DST (IPv4)                 ethernet/vlan/ipv4/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'
-    match: 14_TCP_DST (IPv6)                 ethernet/ipv6/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'
-    match: 14_TCP_DST (IPv6)                 ethernet/vlan/ipv6/tcp(dst_port=6789)-->'tcp_dst=2222,actions=output:2'
-    match: 15_UDP_SRC (IPv4)                 ethernet/ipv4/udp(src_port=12345)-->'udp_src=11111,actions=output:2'
-    match: 15_UDP_SRC (IPv4)                 ethernet/vlan/ipv4/udp(src_port=12345)-->'udp_src=11111,actions=output:2'
-    match: 15_UDP_SRC (IPv6)                 ethernet/ipv6/udp(src_port=12345)-->'udp_src=11111,actions=output:2'
-    match: 15_UDP_SRC (IPv6)                 ethernet/vlan/ipv6/udp(src_port=12345)-->'udp_src=11111,actions=output:2'
     match: 16_UDP_DST (IPv4)                 ethernet/ipv4/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'
     match: 16_UDP_DST (IPv4)                 ethernet/vlan/ipv4/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'
-    match: 16_UDP_DST (IPv6)                 ethernet/ipv6/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'
-    match: 16_UDP_DST (IPv6)                 ethernet/vlan/ipv6/udp(dst_port=6789)-->'udp_dst=2222,actions=output:2'
     match: 17_SCTP_SRC (IPv4)                ethernet/ipv4/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'
     match: 17_SCTP_SRC (IPv4)                ethernet/vlan/ipv4/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'
-    match: 17_SCTP_SRC (IPv6)                ethernet/ipv6/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'
-    match: 17_SCTP_SRC (IPv6)                ethernet/vlan/ipv6/sctp(src_port=12345)-->'sctp_src=11111,actions=output:2'
     match: 18_SCTP_DST (IPv4)                ethernet/ipv4/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'
     match: 18_SCTP_DST (IPv4)                ethernet/vlan/ipv4/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'
-    match: 18_SCTP_DST (IPv6)                ethernet/ipv6/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'
-    match: 18_SCTP_DST (IPv6)                ethernet/vlan/ipv6/sctp(dst_port=6789)-->'sctp_dst=2222,actions=output:2'
     match: 19_ICMPV4_TYPE                    ethernet/ipv4/icmp(type=3)-->'icmpv4_type=8,actions=output:2'
     match: 19_ICMPV4_TYPE                    ethernet/vlan/ipv4/icmp(type=3)-->'icmpv4_type=8,actions=output:2'
     match: 20_ICMPV4_CODE                    ethernet/ipv4/icmp(code=1)-->'icmpv4_code=0,actions=output:2'
@@ -2343,16 +2235,6 @@ Table-miss error(146)
     match: 28_IPV6_FLABEL                    ethernet/vlan/ipv6(flow_label=203)/tcp-->'ipv6_flabel=100,actions=output:2'
     match: 28_IPV6_FLABEL (Mask)             ethernet/ipv6(flow_label=203)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:2'
     match: 28_IPV6_FLABEL (Mask)             ethernet/vlan/ipv6(flow_label=203)/tcp-->'ipv6_flabel=96(mask=0x000ffff0),actions=output:2'
-    match: 29_ICMPV6_TYPE                    ethernet/ipv6/icmpv6(type=135)-->'icmpv6_type=128,actions=output:2'
-    match: 29_ICMPV6_TYPE                    ethernet/vlan/ipv6/icmpv6(type=135)-->'icmpv6_type=128,actions=output:2'
-    match: 30_ICMPV6_CODE                    ethernet/ipv6/icmpv6(code=1)-->'icmpv6_code=0,actions=output:2'
-    match: 30_ICMPV6_CODE                    ethernet/vlan/ipv6/icmpv6(code=1)-->'icmpv6_code=0,actions=output:2'
-    match: 31_IPV6_ND_TARGET                 ethernet/ipv6/icmpv6(data=nd_neighbor(dst='b0::b0'))-->'ipv6_nd_target=20::20,actions=output:2'
-    match: 31_IPV6_ND_TARGET                 ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(dst='b0::b0'))-->'ipv6_nd_target=20::20,actions=output:2'
-    match: 32_IPV6_ND_SLL                    ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2'
-    match: 32_IPV6_ND_SLL                    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_sla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_sll=22:22:22:22:22:22,actions=output:2'
-    match: 33_IPV6_ND_TLL                    ethernet/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2'
-    match: 33_IPV6_ND_TLL                    ethernet/vlan/ipv6/icmpv6(data=nd_neighbor(option=nd_option_tla(hw_src='aa:aa:aa:aa:aa:aa')))-->'ipv6_nd_tll=22:22:22:22:22:22,actions=output:2'
     match: 34_MPLS_LABEL                     ethernet/mpls(label=203)/ipv4/tcp-->'mpls_label=100,actions=output:2'
     match: 34_MPLS_LABEL                     ethernet/mpls(label=203)/ipv6/tcp-->'mpls_label=100,actions=output:2'
     match: 34_MPLS_LABEL                     ethernet/mpls(label=203)/arp-->'mpls_label=100,actions=output:2'
@@ -2379,4 +2261,4 @@ Table-miss error(146)
     match: 39_IPV6_EXTHDR (Mask)             ethernet/ipv6/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'
     match: 39_IPV6_EXTHDR (Mask)             ethernet/vlan/ipv6/tcp-->'ipv6_exthdr=64(mask=0x1f0),actions=output:2'
 
-OK(379) / ERROR(612)
+OK(438) / ERROR(553)
